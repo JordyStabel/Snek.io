@@ -31,7 +31,7 @@ public class Test {
 
     @Override
     public String toString() {
-        return "Greeting{" +
+        return "Test{" +
                 "string='" + string + '\'' +
                 ", number=" + number +
                 '}';

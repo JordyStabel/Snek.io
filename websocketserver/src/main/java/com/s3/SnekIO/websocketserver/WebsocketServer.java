@@ -9,7 +9,6 @@ import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainer
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class WebsocketServer {
 
     private static final Logger logger = LoggerFactory.getLogger(WebsocketServer.class);
