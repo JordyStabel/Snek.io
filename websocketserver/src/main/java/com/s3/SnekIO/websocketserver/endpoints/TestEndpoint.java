@@ -1,7 +1,9 @@
-package com.s3.SnekIO.websocketserver.endpoint;
+package com.s3.SnekIO.websocketserver.endpoints;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.s3.SnekIO.websocketserver.messagelogic.IGameMessageLogic;
+import com.s3.SnekIO.websocketserver.messageprocessor.IGameMessageProcessor;
 import com.s3.SnekIO.websocketshared.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,43 +12,37 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
 @ServerEndpoint(value = "/test/")
 public class TestEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(TestEndpoint.class);
-    private static final List<Session> sessions = new ArrayList<>();
+    private static HashSet<Session> sessions = new HashSet<>();
+
+    IGameMessageLogic gameMessageLogic;
+    IGameMessageProcessor gameMessageProcessor;
+    Gson gson = new Gson();
+
+    public TestEndpoint(IGameMessageLogic gameMessageLogic, IGameMessageProcessor gameMessageProcessor) {
+        this.gameMessageLogic = gameMessageLogic;
+        this.gameMessageProcessor = gameMessageProcessor;
+    }
 
     @OnOpen
-    public void onOpen(Session session) throws IOException, InterruptedException {
+    public void onOpen(Session session) {
         logger.info("Connected SessionID: {}", session.getId());
 
         sessions.add(session);
         logger.info("Session added. Session count: {}", sessions.size());
-
-        Random random = new Random();
-        int x = 500;
-        int y = 500;
-        int r = 35;
-
-        for (int i = 0; i < 50; i++) {
-            x += random.nextInt(50) - 20;
-            y += random.nextInt(50) - 20;
-            r += random.nextInt(11) - 5;
-            if (r <= 10){
-                r = 10;
-            }
-            sendGlobalMessage(x, y, r);
-            Thread.sleep(2500);
-        }
     }
 
     @OnMessage
     public void onText(String message, Session session) {
         logger.info("Session ID: {} Received: {}", session.getId(), message);
-        handleMessageFromClient(message, session);
+        //handleMessageFromClient(message, session);
+        gameMessageProcessor.processMessage(message, session.getId());
     }
 
     @OnClose
@@ -71,16 +67,14 @@ public class TestEndpoint {
         } catch (JsonSyntaxException ex) {
             logger.error("Can't process message: {0}", ex);
         }
-
     }
 
-    public void sendGlobalMessage(int x, int y, int r) {
-        String info = x + "," + y + "," + r;
-
-        for(javax.websocket.Session session:sessions){
+    public void sendGlobalMessage(String message) {
+        logger.info("Message: {}", message);
+        for (javax.websocket.Session session : sessions) {
             try {
-                session.getBasicRemote().sendText(info);
-            } catch (IOException e){
+                session.getBasicRemote().sendText(message);
+            } catch (IOException e) {
                 logger.error("Error @ TestEndpoint.sendGlobalMessage: {0}", e);
             }
         }
