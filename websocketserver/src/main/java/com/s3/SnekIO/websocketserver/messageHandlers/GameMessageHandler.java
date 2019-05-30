@@ -2,8 +2,10 @@ package com.s3.SnekIO.websocketserver.messageHandlers;
 
 import com.google.gson.Gson;
 import com.s3.SnekIO.websocketserver.game.Game;
-import com.s3.SnekIO.websocketserver.messageprocessor.GameMessageProcessor;
+import com.s3.SnekIO.websocketshared.models.InputMouse;
+import com.s3.SnekIO.websocketserver.game.Player;
 import com.s3.SnekIO.websocketshared.actions.Actions;
+import com.s3.SnekIO.websocketshared.actions.Register;
 import com.s3.SnekIO.websocketshared.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,14 @@ public class GameMessageHandler implements IMessageHandler {
         Message message = gson.fromJson(json, Message.class);
 
         switch (message.getAction()) {
+            case REGISTER:
+                Register register = (Register) message.parseData(Register.class);
+                registerPlayer(register, sessionId);
+                break;
+            case INPUTMOUSE:
+                InputMouse inputMouse = (InputMouse) message.parseData(InputMouse.class);
+                game.setInputMouse(inputMouse);
+                break;
             case UP:
                 updatePlayer(Actions.UP);
                 break;
@@ -39,8 +49,16 @@ public class GameMessageHandler implements IMessageHandler {
                 break;
             case UPDATE:
                 updatePlayer(UPDATE);
+                break;
             default:
                 logger.error("No valid action");
+        }
+    }
+
+    private void registerPlayer(Register register, String sessionId) {
+        if (game.findPlayer(sessionId) == null) {
+            Player player = new Player(register.getName(), sessionId);
+            game.addPlayer(player);
         }
     }
 

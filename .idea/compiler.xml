@@ -15,4 +15,9 @@
       <module name="game" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="websocketshared" options="--add-exports=java.datatransfer/java.awt=websocketshared" />
+    </option>
+  </component>
 </project>

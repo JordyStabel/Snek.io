@@ -16,9 +16,9 @@ public class Player implements IAction {
 
     public Player(String name) {
         this.name = name;
-        this.x = random.nextInt(500);
-        this.y = random.nextInt(500);
-        this.r = random.nextInt(25) + 25;
+        this.x = random.nextInt(1700);
+        this.y = random.nextInt(900);
+        this.r = random.nextInt(125) + 25;
     }
 
     public String getName() {

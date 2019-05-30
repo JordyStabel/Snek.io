@@ -23,6 +23,12 @@ public class MessageGenerator implements IMessageGenerator {
 
     @Override
     public void updatePlayers() {
+        if (game.getInputMouse() != null) {
+            Message message = new Message(Actions.INPUTMOUSE, game.getInputMouse());
+            endPoint.broadcast(message);
+            logger.info("Message broadcasted: {}", message);
+            return;
+        }
         Player player = new Player("Henk");
         Message message = new Message(Actions.UPDATE, player);
         endPoint.broadcast(message);

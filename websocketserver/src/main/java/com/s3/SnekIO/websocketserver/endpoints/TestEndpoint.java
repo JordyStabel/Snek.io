@@ -44,7 +44,6 @@ public class TestEndpoint implements IEndPoint {
     @OnOpen
     public void onOpen(Session session) {
         logger.info("Connected SessionID: {}", session.getId());
-
         sessions.add(session);
         logger.info("Session added. Session count: {}", sessions.size());
     }
@@ -96,11 +95,11 @@ public class TestEndpoint implements IEndPoint {
         for (javax.websocket.Session session : sessions) {
             try {
                 session.getBasicRemote().sendText(message);
-                logger.info("Send: {}", message);
             } catch (IOException e) {
                 logger.error("Error @ TestEndpoint.sendGlobalMessage: {0}", e);
             }
         }
+        logger.info("Broadcasted: {}", message);
     }
 
     @Override

@@ -1,15 +1,21 @@
 package com.s3.SnekIO.websocketserver.game;
 
-
 import com.s3.SnekIO.websocketserver.messagegenerator.IMessageGenerator;
-import com.s3.SnekIO.websocketshared.models.Player;
+import com.s3.SnekIO.websocketshared.models.InputMouse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 
 public class Game implements Runnable {
+
+    private static final Logger logger = LoggerFactory.getLogger(Game.class);
+
     private int height;
     private int width;
+
+    private InputMouse inputMouse;
 
     private ArrayList<Player> players;
     private boolean running = false;
@@ -20,7 +26,7 @@ public class Game implements Runnable {
     private ExecutorService executorService;
 
     // GAME LOOP
-    final double TICKS_PER_SECOND = 1;
+    final double TICKS_PER_SECOND = 10;
     final double SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 
     public Game(IMessageGenerator messageGenerator, int height, int width) {
@@ -35,6 +41,32 @@ public class Game implements Runnable {
 
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public Player findPlayer(String uuid) {
+        for (Player player : players) {
+            if (player.getUuid().equals(uuid)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public synchronized void addPlayer(Player player) {
+        if (player != null) {
+            players.add(player);
+            logger.info("New player registered: {}", player);
+        }
+        logger.info("Players: {}", players);
+        messageGenerator.updatePlayers();
+    }
+
+    public InputMouse getInputMouse() {
+        return inputMouse;
+    }
+
+    public void setInputMouse(InputMouse inputMouse) {
+        this.inputMouse = inputMouse;
     }
 
     @Override
