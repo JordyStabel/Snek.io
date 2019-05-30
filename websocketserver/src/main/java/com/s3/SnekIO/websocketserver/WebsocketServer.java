@@ -1,6 +1,10 @@
 package com.s3.SnekIO.websocketserver;
 
+import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketserver.endpoints.TestEndpoint;
+import com.s3.SnekIO.websocketserver.messageHandlers.GameMessageHandler;
+import com.s3.SnekIO.websocketserver.messagegenerator.IMessageGenerator;
+import com.s3.SnekIO.websocketserver.messagegenerator.MessageGenerator;
 import com.s3.SnekIO.websocketserver.messagelogic.GameMessageLogic;
 import com.s3.SnekIO.websocketserver.messagelogic.IGameMessageLogic;
 import com.s3.SnekIO.websocketserver.messageprocessor.GameMessageProcessor;
@@ -12,9 +16,6 @@ import org.eclipse.jetty.websocket.jsr356.server.ServerContainer;
 import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.websocket.server.ServerEndpoint;
-import javax.websocket.server.ServerEndpointConfig;
 
 public class WebsocketServer {
 
@@ -43,25 +44,26 @@ public class WebsocketServer {
         final TestEndpoint testEndpoint = new TestEndpoint(gameMessageLogic, gameMessageProcessor);
         gameMessageLogic.setEndPoint(testEndpoint);
 
+        IMessageGenerator messageGenerator = new MessageGenerator(testEndpoint);
+        Game game = new Game(messageGenerator, 500,500);
+        messageGenerator.setGame(game);
+
+        GameMessageHandler messageHandler = new GameMessageHandler(game);
+
         try {
             ServerContainer serverContainer = WebSocketServerContainerInitializer.configureContext(wsContext);
             logger.info("javax.websocket layer initialized");
 
-            // Add websocket endpoint to javax.websocket layer
-            ServerEndpointConfig config = ServerEndpointConfig.Builder.create(testEndpoint.getClass(), testEndpoint.getClass().getAnnotation(ServerEndpoint.class).value())
-                    .configurator(new ServerEndpointConfig.Configurator() {
-                        @Override
-                        public <T> T getEndpointInstance(Class<T> endpointClass) {
-                            return (T) testEndpoint;
-                        }
-                    })
-                    .build();
+            TestEndpoint.setMessageHandler(messageHandler);
 
-            serverContainer.addEndpoint(config);
+            serverContainer.addEndpoint(TestEndpoint.class);
             logger.info("Endpoint added");
 
             wsServer.start();
             logger.info("Server started");
+
+            game.start();
+            logger.info("Game started");
 
             wsServer.join();
             logger.info("Server joined");

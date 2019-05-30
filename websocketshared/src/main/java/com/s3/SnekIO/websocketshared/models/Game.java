@@ -1,12 +1,13 @@
-package com.s3.SnekIO.game;
+package com.s3.SnekIO.websocketshared.models;
 
+import com.s3.SnekIO.websocketshared.actions.IAction;
 import com.s3.SnekIO.websocketshared.models.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Game {
+public class Game implements IAction {
     private int height;
     private int width;
 

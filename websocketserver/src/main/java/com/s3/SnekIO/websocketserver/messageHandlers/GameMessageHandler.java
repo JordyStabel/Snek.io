@@ -1,6 +1,7 @@
 package com.s3.SnekIO.websocketserver.messageHandlers;
 
 import com.google.gson.Gson;
+import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketserver.messageprocessor.GameMessageProcessor;
 import com.s3.SnekIO.websocketshared.actions.Actions;
 import com.s3.SnekIO.websocketshared.message.Message;
@@ -11,11 +12,12 @@ import static com.s3.SnekIO.websocketshared.actions.Actions.*;
 
 public class GameMessageHandler implements IMessageHandler {
 
+    private Game game;
     private static Gson gson = new Gson();
-    private static final Logger logger = LoggerFactory.getLogger(GameMessageProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameMessageHandler.class);
 
-    public GameMessageHandler() {
-
+    public GameMessageHandler(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -35,6 +37,8 @@ public class GameMessageHandler implements IMessageHandler {
             case RIGHT:
                 updatePlayer(RIGHT);
                 break;
+            case UPDATE:
+                updatePlayer(UPDATE);
             default:
                 logger.error("No valid action");
         }
@@ -59,6 +63,9 @@ public class GameMessageHandler implements IMessageHandler {
 
                 break;
             case UP:
+
+                break;
+            case UPDATE:
 
                 break;
             default:

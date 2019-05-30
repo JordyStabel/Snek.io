@@ -30,9 +30,10 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
-            <version>1.1</version>
+            <groupId>com.s3.SnekIO</groupId>
+            <artifactId>game</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

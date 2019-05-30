@@ -8,11 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="websocketshared" />
         <module name="websocketserver" />
-        <module name="game" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="clientcommunicator" target="1.5" />
+      <module name="game" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

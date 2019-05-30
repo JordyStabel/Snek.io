@@ -4,5 +4,6 @@ public enum Actions {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    UPDATE
 }
