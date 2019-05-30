@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="websocketshared" />
         <module name="websocketserver" />
+        <module name="game" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

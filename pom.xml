@@ -11,6 +11,7 @@
     <modules>
         <module>websocketserver</module>
         <module>websocketshared</module>
+        <module>game</module>
     </modules>
 
     <string>Snek.io</string>

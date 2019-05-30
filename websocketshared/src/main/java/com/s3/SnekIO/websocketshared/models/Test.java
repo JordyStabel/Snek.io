@@ -1,4 +1,4 @@
-package com.s3.SnekIO.websocketshared;
+package com.s3.SnekIO.websocketshared.models;
 
 public class Test {
 

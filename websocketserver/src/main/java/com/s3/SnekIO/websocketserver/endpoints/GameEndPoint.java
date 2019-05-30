@@ -13,8 +13,8 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashSet;
 
-@ServerEndpoint(value = "/test/")
-public class TestEndpoint {
+@ServerEndpoint(value = "/game/")
+public class GameEndPoint {
 
     private static final Logger logger = LoggerFactory.getLogger(TestEndpoint.class);
     private static HashSet<Session> sessions = new HashSet<>();
@@ -23,7 +23,7 @@ public class TestEndpoint {
     IGameMessageProcessor gameMessageProcessor;
     Gson gson = new Gson();
 
-    public TestEndpoint(IGameMessageLogic gameMessageLogic, IGameMessageProcessor gameMessageProcessor) {
+    public GameEndPoint(IGameMessageLogic gameMessageLogic, IGameMessageProcessor gameMessageProcessor) {
         this.gameMessageLogic = gameMessageLogic;
         this.gameMessageProcessor = gameMessageProcessor;
     }
