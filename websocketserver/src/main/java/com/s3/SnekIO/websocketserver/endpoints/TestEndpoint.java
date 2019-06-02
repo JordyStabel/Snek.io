@@ -59,6 +59,7 @@ public class TestEndpoint implements IEndPoint {
     @OnClose
     public void onClose(CloseReason reason, Session session) {
         logger.info("Session ID: {} Reason: {}", session.getId(), reason);
+        messageHandler.disconnected(session.getId());
         sessions.remove(session);
     }
 
@@ -93,11 +94,7 @@ public class TestEndpoint implements IEndPoint {
 
     private void broadcast(String message) {
         for (javax.websocket.Session session : sessions) {
-            try {
-                session.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                logger.error("Error @ TestEndpoint.sendGlobalMessage: {0}", e);
-            }
+            session.getAsyncRemote().sendText(message);
         }
         logger.info("Broadcasted: {}", message);
     }

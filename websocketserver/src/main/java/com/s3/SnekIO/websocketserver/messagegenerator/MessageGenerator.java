@@ -3,10 +3,9 @@ package com.s3.SnekIO.websocketserver.messagegenerator;
 import com.s3.SnekIO.websocketserver.WebsocketServer;
 import com.s3.SnekIO.websocketserver.endpoints.IEndPoint;
 import com.s3.SnekIO.websocketserver.game.Game;
-import com.s3.SnekIO.websocketserver.endpoints.TestEndpoint;
 import com.s3.SnekIO.websocketshared.actions.Actions;
 import com.s3.SnekIO.websocketshared.message.Message;
-import com.s3.SnekIO.websocketshared.models.Player;
+import com.s3.SnekIO.websocketshared.models.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,16 +22,18 @@ public class MessageGenerator implements IMessageGenerator {
 
     @Override
     public void updatePlayers() {
-        if (game.getInputMouse() != null) {
-            Message message = new Message(Actions.INPUTMOUSE, game.getInputMouse());
-            endPoint.broadcast(message);
-            logger.info("Message broadcasted: {}", message);
-            return;
-        }
-        Player player = new Player("Henk");
-        Message message = new Message(Actions.UPDATE, player);
-        endPoint.broadcast(message);
-        logger.info("Message broadcasted: {}", message);
+//        if (game.getInputMouse() != null) {
+//            Message message = new Message(Actions.INPUTMOUSE, game.getInputMouse());
+//            endPoint.broadcast(message);
+//            logger.info("Message broadcasted: {}", message);
+//            return;
+//        }
+
+        GameState gameState = new GameState(game.getPlayers());
+
+        Message msg = new Message(Actions.GAMESTATE, gameState);
+        endPoint.broadcast(msg);
+               logger.info("Message broadcasted: {}", msg);
     }
 
     @Override

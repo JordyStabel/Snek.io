@@ -63,7 +63,7 @@ public class WebsocketServer {
             logger.info("Server started");
 
             game.start();
-            logger.info("Game started");
+            logger.info("GameState started");
 
             wsServer.join();
             logger.info("Server joined");

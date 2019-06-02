@@ -3,14 +3,12 @@ package com.s3.SnekIO.websocketserver.messageHandlers;
 import com.google.gson.Gson;
 import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketshared.models.InputMouse;
-import com.s3.SnekIO.websocketserver.game.Player;
+import com.s3.SnekIO.websocketshared.models.Player;
 import com.s3.SnekIO.websocketshared.actions.Actions;
 import com.s3.SnekIO.websocketshared.actions.Register;
 import com.s3.SnekIO.websocketshared.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.s3.SnekIO.websocketshared.actions.Actions.*;
 
 public class GameMessageHandler implements IMessageHandler {
 
@@ -33,22 +31,13 @@ public class GameMessageHandler implements IMessageHandler {
                 break;
             case INPUTMOUSE:
                 InputMouse inputMouse = (InputMouse) message.parseData(InputMouse.class);
-                game.setInputMouse(inputMouse);
-                break;
-            case UP:
-                updatePlayer(Actions.UP);
-                break;
-            case DOWN:
-                updatePlayer(Actions.DOWN);
-                break;
-            case LEFT:
-                updatePlayer(LEFT);
-                break;
-            case RIGHT:
-                updatePlayer(RIGHT);
-                break;
-            case UPDATE:
-                updatePlayer(UPDATE);
+                Player player = game.findPlayer(sessionId);
+
+                if (player == null) {
+                    logger.error("Player can't be null");
+                    return;
+                }
+                player.setInputMouse(inputMouse);
                 break;
             default:
                 logger.error("No valid action");
@@ -64,11 +53,17 @@ public class GameMessageHandler implements IMessageHandler {
 
     @Override
     public void disconnected(String sessionId) {
-
+        game.removePlayer(sessionId);
     }
 
-    private void updatePlayer(Actions action) {
-        // TODO: Make player specific
+    private void updatePlayer(Actions action, String sessionId) {
+
+        Player player = game.findPlayer(sessionId);
+
+        if (player == null) {
+            logger.error("Player can't be null");
+            return;
+        }
 
         switch (action) {
             case LEFT:

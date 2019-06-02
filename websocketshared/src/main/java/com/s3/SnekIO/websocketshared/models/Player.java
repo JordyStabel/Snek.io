@@ -1,45 +1,38 @@
 package com.s3.SnekIO.websocketshared.models;
 
-import com.s3.SnekIO.websocketshared.actions.IAction;
-import com.s3.SnekIO.websocketshared.util.IJson;
-
-import java.util.Random;
-
-public class Player implements IAction {
-
+public class Player {
     private String name;
-    private int x;
-    private int y;
-    private int r;
+    private String uuid;
+    private InputMouse inputMouse;
 
-    private static Random random = new Random();
-
-    public Player(String name) {
+    public Player(String name, String uuid) {
         this.name = name;
-        this.x = random.nextInt(1700);
-        this.y = random.nextInt(900);
-        this.r = random.nextInt(125) + 25;
+        this.uuid = uuid;
+        this.inputMouse = new InputMouse(0,0);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getX() {
-        return x;
+    public String getUuid() {
+        return uuid;
     }
 
-    public int getY() {
-        return y;
+    public InputMouse getInputMouse() {
+        return inputMouse;
     }
 
-    public int getR() {
-        return r;
+    public void setInputMouse(InputMouse inputMouse) {
+        this.inputMouse = inputMouse;
     }
 
-    public void update(int x, int y, int r) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", inputMouse=" + inputMouse +
+                '}';
     }
 }
