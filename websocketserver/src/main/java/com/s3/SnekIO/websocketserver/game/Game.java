@@ -28,7 +28,7 @@ public class Game implements Runnable {
     private ExecutorService executorService;
 
     // GAME LOOP
-    final double TICKS_PER_SECOND = 32;
+    final double TICKS_PER_SECOND = 24;
     final double SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 
     public Game(IMessageGenerator messageGenerator, int height, int width) {

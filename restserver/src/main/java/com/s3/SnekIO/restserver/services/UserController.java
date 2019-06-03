@@ -1,8 +1,10 @@
 package com.s3.SnekIO.restserver.services;
 
 import com.s3.SnekIO.restserver.User;
-import com.s3.SnekIO.restserver.repositories.UsersRepository;
+import com.s3.SnekIO.restserver.repositories.UserRepository;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,12 +12,15 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UsersController {
-    @Autowired
-    private UsersRepository usersRepository;
+@RequestMapping("/user")
+public class UserController {
 
-    @GetMapping(value = "/")
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    private UserRepository usersRepository;
+
+    @GetMapping
     public List<User> getAllUsers() {
         return usersRepository.findAll();
     }
@@ -31,16 +36,22 @@ public class UsersController {
         usersRepository.save(user);
     }
 
-    @PostMapping(value = "/")
-    public User createUser(@Valid @RequestBody User user) {
+    @PostMapping
+    public User register(@Valid @RequestBody User user) {
         user.set_id(ObjectId.get());
         usersRepository.save(user);
+        logger.info("New user registered: {}", user.toString());
         return user;
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deletePet(@PathVariable ObjectId id) {
+    public void deleteUser(@PathVariable ObjectId id) {
         usersRepository.delete(usersRepository.findBy_id(id));
+    }
+
+    @DeleteMapping
+    public void deleteUsers() {
+        usersRepository.deleteAll();
     }
 
 }

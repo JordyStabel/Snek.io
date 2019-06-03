@@ -53,4 +53,18 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    /**
+     * FOR DEBUGGING ONLY!
+     * @return A user object as text (with password in plain text :))
+     */
+    @Override
+    public String toString() {
+        return "User{" +
+                "_id=" + _id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
