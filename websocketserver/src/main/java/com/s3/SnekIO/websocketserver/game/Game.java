@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 public class Game implements Runnable {
 
@@ -25,10 +24,8 @@ public class Game implements Runnable {
     private IMessageGenerator messageGenerator;
     private Thread gameThread;
 
-    private ExecutorService executorService;
-
     // GAME LOOP
-    final double TICKS_PER_SECOND = 24;
+    final double TICKS_PER_SECOND = 16;
     final double SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 
     public Game(IMessageGenerator messageGenerator, int height, int width) {
