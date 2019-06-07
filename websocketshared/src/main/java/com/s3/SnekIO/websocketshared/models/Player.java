@@ -42,9 +42,20 @@ public class Player {
     }
 
     public void setInputMouse(InputMouse inputMouse) {
-        this.inputMouse = inputMouse;
+        // This is the old way, new way should add the position instead of setting it completely
+        //this.inputMouse = inputMouse;
 
-        dragSnek(0, inputMouse.getX(), inputMouse.getY());
+        // Adding the new position from the client instead of setting it directly
+        // TODO: Refactor this code to make it look decent
+        int x = this.inputMouse.getX() + inputMouse.getX();
+        int y = this.inputMouse.getY() + inputMouse.getY();
+
+        this.inputMouse.setX(x);
+        this.inputMouse.setY(y);
+
+        this.sneks[this.sneks.length + 1] = new Snek(0, 0, 35, rand.nextInt(999999999) + name + rand.nextInt(999999999));
+
+        dragSnek(0, x, y);
         for (int i = 0; i < sneks.length - 1; i++) {
             dragSnek(i + 1, sneks[i].getX(), sneks[i].getY());
         }

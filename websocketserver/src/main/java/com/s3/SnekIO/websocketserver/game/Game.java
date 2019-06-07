@@ -25,7 +25,7 @@ public class Game implements Runnable {
     private Thread gameThread;
 
     // GAME LOOP
-    final double TICKS_PER_SECOND = 16;
+    final double TICKS_PER_SECOND = 10;
     final double SKIP_TICKS = 1000 / TICKS_PER_SECOND;
 
     public Game(IMessageGenerator messageGenerator, int height, int width) {
