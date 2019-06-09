@@ -1,0 +1,8 @@
+language: java
+
+sudo: false
+install: mvn install
+dist: trusty
+
+jdk:
+  - oraclejdk11

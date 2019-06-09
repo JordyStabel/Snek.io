@@ -10,7 +10,6 @@ public class Player {
     private InputMouse inputMouse;
 
     private static Random rand = new Random();
-    private int count = 0;
 
     public Player(String name, String uuid, Position startingPosition) {
         this.name = name;
@@ -32,9 +31,6 @@ public class Player {
     }
 
     public void setInputMouse(InputMouse inputMouse) {
-        // This is the old way, new way should add the position instead of setting it completely
-        //this.inputMouse = inputMouse;
-
         // Adding the new position from the client instead of setting it directly
         // TODO: Refactor this code to make it look decent
         float x = this.inputMouse.getX() + inputMouse.getX();
