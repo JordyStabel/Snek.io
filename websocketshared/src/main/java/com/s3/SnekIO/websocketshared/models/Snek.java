@@ -1,36 +1,58 @@
 package com.s3.SnekIO.websocketshared.models;
 
-public class Snek {
-    private int x;
-    private int y;
-    private int r;
+import java.util.ArrayList;
 
+public class Snek {
+    private Position position;
+    private float r;
+    private int size;
+    private ArrayList<Position> tail;
     private String uuid;
 
-    public Snek(int x, int y, int r, String uuid) {
-        this.x = x;
-        this.y = y;
+
+    public Snek(float x, float y, float r, int size, String uuid) {
+        this.position = new Position(x, y);
         this.r = r;
+        this.size = size;
+        this.tail = new ArrayList<>();
         this.uuid = uuid;
     }
 
-    public int getX() {
-        return x;
+    public void update(float x, float y) {
+        // Add new position to tail
+        tail.add(new Position(position.getX() + x, position.getY() + y));
+
+        // Check if the max length has been reached, otherwise remove last position (very last object in the Snek) which is the first in the array
+        if (tail.size() > size) {
+            tail.remove(0);
+        }
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public Position getPosition() {
+        return position;
     }
 
-    public int getY() {
-        return y;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public ArrayList<Position> getTail() {
+        return tail;
     }
 
-    public int getR() {
+    public void setTail(ArrayList<Position> tail) {
+        this.tail = tail;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public float getR() {
         return r;
     }
 

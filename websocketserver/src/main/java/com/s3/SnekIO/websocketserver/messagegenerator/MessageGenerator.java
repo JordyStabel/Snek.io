@@ -9,6 +9,8 @@ import com.s3.SnekIO.websocketshared.models.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class MessageGenerator implements IMessageGenerator {
 
     private IEndPoint endPoint;
@@ -29,11 +31,15 @@ public class MessageGenerator implements IMessageGenerator {
 //            return;
 //        }
 
-        GameState gameState = new GameState(game.getPlayers());
-
-        Message msg = new Message(Actions.GAMESTATE, gameState);
-        endPoint.broadcast(msg);
-               logger.info("Message broadcasted: {}", msg);
+        try {
+            GameState gameState = new GameState(game.getPlayers());
+            Message msg = new Message(Actions.GAMESTATE, gameState);
+            endPoint.broadcast(msg);
+            logger.info("Message broadcasted: {}", msg);
+        }
+        catch (Exception exception) {
+            logger.error("Something went wrong: {0}", exception);
+        }
     }
 
     @Override
