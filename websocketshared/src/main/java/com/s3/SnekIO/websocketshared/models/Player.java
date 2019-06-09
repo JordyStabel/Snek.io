@@ -16,7 +16,7 @@ public class Player {
         this.name = name;
         this.uuid = uuid;
         this.inputMouse = new InputMouse(0, 0);
-        this.snek = new Snek(startingPosition.getX(), startingPosition.getY(), 25, 50, rand.nextInt(99999) + name + rand.nextInt(99999));
+        this.snek = new Snek(startingPosition.getX(), startingPosition.getY(), 25, 25, rand.nextInt(99999) + name + rand.nextInt(99999));
     }
 
     public String getName() {
