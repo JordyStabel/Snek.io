@@ -1,4 +1,4 @@
-package com.s3.SnekIO.restserver.Exception;
+package com.s3.SnekIO.restserver.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

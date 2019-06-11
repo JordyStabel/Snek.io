@@ -1,9 +1,10 @@
 package com.s3.SnekIO.restserver.services;
 
-import com.s3.SnekIO.restserver.Exception.BadRequestException;
-import com.s3.SnekIO.restserver.Exception.ConflictException;
-import com.s3.SnekIO.restserver.Exception.NotFoundException;
+import com.s3.SnekIO.restserver.exception.BadRequestException;
+import com.s3.SnekIO.restserver.exception.ConflictException;
+import com.s3.SnekIO.restserver.exception.NotFoundException;
 import com.s3.SnekIO.restserver.User;
+import com.s3.SnekIO.restserver.handler.UserHandler;
 import com.s3.SnekIO.restserver.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -17,9 +18,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserResourceController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserResourceController.class);
 
     @Autowired
     private UserRepository usersRepository;
@@ -49,8 +50,7 @@ public class UserController {
     @PostMapping(value = "/register")
     public User register(@Valid @RequestBody User user) {
         // Check if email is already in use
-        if (usersRepository.findUserByEmail(user.email.toLowerCase()) != null)
-        {
+        if (usersRepository.findUserByEmail(user.email.toLowerCase()) != null) {
             logger.warn("Email already in use: {}", user.email);
             throw new ConflictException("This email address is already in use.");
         }
@@ -82,8 +82,7 @@ public class UserController {
         }
 
         // Check passwords
-        if (BCrypt.checkpw(inputUser.password, outputUser.password))
-        {
+        if (BCrypt.checkpw(inputUser.password, outputUser.password)) {
             logger.info("User logged in: {}", outputUser);
             return outputUser;
         } else {

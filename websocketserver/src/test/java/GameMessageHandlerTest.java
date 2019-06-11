@@ -1,12 +1,14 @@
-package com.s3.SnekIO.restserver;
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
+class GameMessageHandlerTest {
 
     @Test
-    void get_id() {
+    void handelMessage() {
+    }
+
+    @Test
+    void disconnected() {
     }
 }
