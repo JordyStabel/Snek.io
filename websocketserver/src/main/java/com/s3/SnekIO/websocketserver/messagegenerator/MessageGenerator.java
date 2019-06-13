@@ -32,7 +32,7 @@ public class MessageGenerator implements IMessageGenerator {
 //        }
 
         try {
-            GameState gameState = new GameState(game.getPlayers());
+            GameState gameState = new GameState(game.getOrbs(), game.getPlayers());
             Message msg = new Message(Actions.GAMESTATE, gameState);
             endPoint.broadcast(msg);
             logger.info("Message broadcasted: {}", msg);
