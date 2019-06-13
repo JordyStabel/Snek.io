@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="websocketshared" />
         <module name="websocketserver" />
-        <module name="game" />
         <module name="restserver" />
       </profile>
     </annotationProcessing>

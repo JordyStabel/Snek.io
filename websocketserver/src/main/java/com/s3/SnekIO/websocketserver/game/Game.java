@@ -121,26 +121,32 @@ public class Game implements Runnable {
                         // Last item in the playerSnek is the head
                         Position playerSnekHead = playerSnek.get(playerSnek.size() - 1);
 
+                        // Check for orbs collecting
+                        // Check each orb position if it's intersecting with the Snek head
+                        // New java method (Java 8 "new"), which removes an item from a list if it matches a condition. Without needing to create a loop AND no ConcurrentModificationException!
+                        // It also return a boolean, so it's easy to do something else after meeting the condition
+                        if (orbs.removeIf(orb -> Math.hypot(playerSnekHead.getX() - orb.getPosition().getX(), playerSnekHead.getY() - orb.getPosition().getY()) < 50)) {
+                            player.getSnek().increaseSize(1);
+                        }
+
                         for (Player otherPlayer : players) {
                             if (otherPlayer != player) {
                                 for (Position otherPlayerSnekPart : otherPlayer.getSnek().getTail()) {
                                     // Replace '50' with actual r of players snek
                                     if (Math.hypot(playerSnekHead.getX() - otherPlayerSnekPart.getX(), playerSnekHead.getY() - otherPlayerSnekPart.getY()) < 50) {
-                                        System.out.println("Player: " + player.getUuid() + " hit player: " + otherPlayer.getUuid());
-                                        List<Position> toRemoveItems = playerSnek.subList(0, playerSnek.size() - 2);
-                                        playerSnek.removeAll(toRemoveItems);
-                                        player.getSnek().setSize(1);
+                                        logger.info("Player: {} hit player: {}", player.getUuid(), otherPlayer.getUuid());
+                                        List<Position> toRemoveSnekParts = playerSnek.subList(0, playerSnek.size() - 2);
+                                        playerSnek.removeAll(toRemoveSnekParts);
+                                        player.getSnek().setSize(5);
                                     }
                                 }
                             }
                         }
                     }
                 }
-
                 next_game_tick += SKIP_TICKS;
                 messageGenerator.updatePlayers();
             }
         }
     }
 }
-

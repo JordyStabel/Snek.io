@@ -12,7 +12,6 @@
         <module>websocketserver</module>
         <module>websocketshared</module>
         <module>restserver</module>
-        <module>game</module>
     </modules>
 
     <properties>

@@ -36,6 +36,14 @@ public class Snek {
         this.position = position;
     }
 
+    public void increaseSize(int increment) {
+        size += increment;
+    }
+
+    public void decreaseSize(int decrement) {
+        size += decrement;
+    }
+
     public int getSize() {
         return size;
     }
