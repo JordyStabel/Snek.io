@@ -1,25 +1,30 @@
 package com.s3.SnekIO.websocketshared.models;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
     private String name;
+    private String sessionId;
     private String uuid;
+    private String color;
     private Snek snek;
     private InputMouse inputMouse;
 
-    private static Random rand = new Random();
-
-    public Player(String name, String uuid, Position startingPosition) {
+    public Player(String name, String sessionId, String uuid, String color, Position startingPosition) {
         this.name = name;
+        this.sessionId = sessionId;
         this.uuid = uuid;
+        this.color = color;
         this.inputMouse = new InputMouse(0, 0);
-        this.snek = new Snek(startingPosition.getX(), startingPosition.getY(), 25, 5, rand.nextInt(99999) + name + rand.nextInt(99999));
+        this.snek = new Snek(startingPosition.getX(), startingPosition.getY(), 25, 5, uuid);
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 
     public String getUuid() {
@@ -41,50 +46,7 @@ public class Player {
 
         // Update Snek
         snek.update(x, y);
-
-//        dragSnek(0, x, y);
-//        for (int i = 0; i < sneks.size() - 1; i++) {
-//            dragSnek(i + 1, sneks.get(i).getX(), sneks.get(i).getY());
-//        }
     }
-
-//    public void updateSnekPos() {
-//        // Update first Snek with new mouse position
-//        updatePrevPos(this.inputMouse.getX(), this.inputMouse.getY(), sneks.get(0));
-//
-//        // Set the position of each Snek equal to the position of the previous one
-//        for (int i = 1; i < sneks.size() - 1; i++) {
-//            Snek leadingSnek = sneks.get(i - 1);
-//            updatePrevPos(leadingSnek.getPrevX(), leadingSnek.getPrevY(), sneks.get(i));
-//        }
-//    }
-
-//    private void dragSnek(int i, int x, int y) {
-//        float dx = x - sneks.get(i).getX();
-//        float dy = y - sneks.get(i).getY();
-//        float angle = (float) Math.atan2(dy, dx);
-//        sneks.get(i).setX((int) (x - Math.cos(angle) * 25));
-//        sneks.get(i).setY((int) (y - Math.sin(angle) * 25));
-//    }
-
-//    private void updatePrevPos(int x, int y, Snek snek) {
-//        if (count >= 100) {
-//            sneks.add(new Snek(25, 25, 35, 0, 0, rand.nextInt(999999999) + name + rand.nextInt(999999999)));
-//            count = 0;
-//        }
-//
-//        snek.setPrevX(snek.getX());
-//        snek.setPrevY(snek.getY());
-//        if (x == snek.getX() || y == snek.getY()) {
-//            count++;
-//         return;
-//        }
-//        snek.setX(x);
-//        snek.setY(y);
-//
-//        count++;
-//    }
-
 
     public Snek getSnek() {
         return snek;
@@ -98,7 +60,9 @@ public class Player {
     public String toString() {
         return "Player{" +
                 "name='" + name + '\'' +
+                ", sessionId='" + sessionId + '\'' +
                 ", uuid='" + uuid + '\'' +
+                ", color='" + color + '\'' +
                 ", snek=" + snek +
                 ", inputMouse=" + inputMouse +
                 '}';

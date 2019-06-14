@@ -2,11 +2,9 @@ package com.s3.SnekIO.websocketserver.endpoints;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.s3.SnekIO.websocketserver.messageHandlers.GameMessageHandler;
 import com.s3.SnekIO.websocketserver.messageHandlers.IMessageHandler;
 import com.s3.SnekIO.websocketserver.messagelogic.IGameMessageLogic;
 import com.s3.SnekIO.websocketserver.messageprocessor.IGameMessageProcessor;
-import com.s3.SnekIO.websocketshared.models.Test;
 import com.s3.SnekIO.websocketshared.util.IJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +13,6 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
 
 @ServerEndpoint(value = "/test/")
 public class TestEndpoint implements IEndPoint {
@@ -66,19 +62,6 @@ public class TestEndpoint implements IEndPoint {
     @OnError
     public void onError(Throwable error, Session session) {
         logger.error("Session ID: {} Error: {}", session.getId(), error.getMessage());
-    }
-
-    private void handleMessageFromClient(String jsonMessage, Session session) {
-        Gson gson = new Gson();
-
-        logger.info("SessionID: {} json: {}", session.getId(), jsonMessage);
-
-        try {
-            Test message = gson.fromJson(jsonMessage, Test.class);
-            logger.info("Session ID: {} Message handled: {}", session.getId(), message);
-        } catch (JsonSyntaxException ex) {
-            logger.error("Can't process Message: {0}", ex);
-        }
     }
 
     public void sendGlobalMessage(String message) {

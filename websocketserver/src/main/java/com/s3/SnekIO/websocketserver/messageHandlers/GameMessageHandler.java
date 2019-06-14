@@ -7,7 +7,6 @@ import com.s3.SnekIO.websocketshared.models.Player;
 import com.s3.SnekIO.websocketshared.actions.Actions;
 import com.s3.SnekIO.websocketshared.actions.Register;
 import com.s3.SnekIO.websocketshared.message.Message;
-import com.s3.SnekIO.websocketshared.models.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +46,7 @@ public class GameMessageHandler implements IMessageHandler {
 
     private void registerPlayer(Register register, String sessionId) {
         if (game.findPlayer(sessionId) == null) {
-            Player player = new Player(register.getName(), sessionId, register.getStartingPosition());
+            Player player = new Player(register.getName(), sessionId, register.getUuid(), register.getColor(), register.getStartingPosition());
             game.addPlayer(player);
         }
     }

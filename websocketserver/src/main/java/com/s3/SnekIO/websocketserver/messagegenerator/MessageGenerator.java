@@ -9,14 +9,12 @@ import com.s3.SnekIO.websocketshared.models.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 public class MessageGenerator implements IMessageGenerator {
 
     private IEndPoint endPoint;
     private Game game;
 
-    private static final Logger logger = LoggerFactory.getLogger(WebsocketServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageGenerator.class);
 
     public MessageGenerator(IEndPoint endPoint) {
         this.endPoint = endPoint;
@@ -24,13 +22,6 @@ public class MessageGenerator implements IMessageGenerator {
 
     @Override
     public void updatePlayers() {
-//        if (game.getInputMouse() != null) {
-//            Message message = new Message(Actions.INPUTMOUSE, game.getInputMouse());
-//            endPoint.broadcast(message);
-//            logger.info("Message broadcasted: {}", message);
-//            return;
-//        }
-
         try {
             GameState gameState = new GameState(game.getOrbs(), game.getPlayers());
             Message msg = new Message(Actions.GAMESTATE, gameState);
@@ -38,7 +29,7 @@ public class MessageGenerator implements IMessageGenerator {
             logger.info("Message broadcasted: {}", msg);
         }
         catch (Exception exception) {
-            logger.error("Something went wrong: {0}", exception);
+            logger.error("ConcurrentModificationException");
         }
     }
 

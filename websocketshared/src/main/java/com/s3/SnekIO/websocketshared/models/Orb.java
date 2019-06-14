@@ -1,12 +1,8 @@
 package com.s3.SnekIO.websocketshared.models;
 
-import java.awt.*;
-
 public class Orb {
     private Position position;
-
     private float value;
-    private Color color;
 
     public Orb(Position position, float value) {
         this.position = position;

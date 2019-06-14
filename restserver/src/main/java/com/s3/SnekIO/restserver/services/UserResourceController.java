@@ -4,7 +4,6 @@ import com.s3.SnekIO.restserver.exception.BadRequestException;
 import com.s3.SnekIO.restserver.exception.ConflictException;
 import com.s3.SnekIO.restserver.exception.NotFoundException;
 import com.s3.SnekIO.restserver.User;
-import com.s3.SnekIO.restserver.handler.UserHandler;
 import com.s3.SnekIO.restserver.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
