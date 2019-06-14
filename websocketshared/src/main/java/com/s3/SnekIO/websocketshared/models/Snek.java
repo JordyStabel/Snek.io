@@ -18,19 +18,6 @@ public class Snek {
         this.uuid = uuid;
     }
 
-    public void update(float x, float y) {
-        // Add new position to tail
-        tail.add(new Position(position.getX() + x, position.getY() + y));
-
-        // Increase radius
-        r = (float)Math.sqrt(size) * 10;
-
-        // Check if the max length has been reached, otherwise remove last position (very last object in the Snek) which is the first in the array
-        if (tail.size() > size) {
-            tail.remove(0);
-        }
-    }
-
     public Position getPosition() {
         return position;
     }
@@ -75,7 +62,7 @@ public class Snek {
         return r;
     }
 
-    public void setR(int r) {
+    public void setR(float r) {
         this.r = r;
     }
 }

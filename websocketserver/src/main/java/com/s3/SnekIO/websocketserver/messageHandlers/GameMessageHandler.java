@@ -2,9 +2,9 @@ package com.s3.SnekIO.websocketserver.messageHandlers;
 
 import com.google.gson.Gson;
 import com.s3.SnekIO.websocketserver.game.Game;
+import com.s3.SnekIO.websocketserver.game.PlayerLogic;
 import com.s3.SnekIO.websocketshared.models.InputMouse;
 import com.s3.SnekIO.websocketshared.models.Player;
-import com.s3.SnekIO.websocketshared.actions.Actions;
 import com.s3.SnekIO.websocketshared.actions.Register;
 import com.s3.SnekIO.websocketshared.message.Message;
 import org.slf4j.Logger;
@@ -13,11 +13,13 @@ import org.slf4j.LoggerFactory;
 public class GameMessageHandler implements IMessageHandler {
 
     private Game game;
+    private PlayerLogic playerLogic;
     private static Gson gson = new Gson();
     private static final Logger logger = LoggerFactory.getLogger(GameMessageHandler.class);
 
     public GameMessageHandler(Game game) {
         this.game = game;
+        playerLogic = new PlayerLogic();
     }
 
     @Override
@@ -34,10 +36,10 @@ public class GameMessageHandler implements IMessageHandler {
                 Player player = game.findPlayer(sessionId);
 
                 if (player == null) {
-                    logger.error("Player can't be null");
+                    logger.error("PlayerLogic can't be null");
                     return;
                 }
-                player.setInputMouse(inputMouse);
+                playerLogic.updatePlayerInputMouse(player, inputMouse);
                 break;
             default:
                 logger.error("No valid action");
@@ -54,35 +56,5 @@ public class GameMessageHandler implements IMessageHandler {
     @Override
     public void disconnected(String sessionId) {
         game.removePlayer(sessionId);
-    }
-
-    private void updatePlayer(Actions action, String sessionId) {
-
-        Player player = game.findPlayer(sessionId);
-
-        if (player == null) {
-            logger.error("Player can't be null");
-            return;
-        }
-
-        switch (action) {
-            case LEFT:
-
-                break;
-            case DOWN:
-
-                break;
-            case RIGHT:
-
-                break;
-            case UP:
-
-                break;
-            case UPDATE:
-
-                break;
-            default:
-                throw new IllegalArgumentException("No direction found");
-        }
     }
 }

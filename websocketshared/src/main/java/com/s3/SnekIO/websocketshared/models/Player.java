@@ -36,16 +36,7 @@ public class Player {
     }
 
     public void setInputMouse(InputMouse inputMouse) {
-        // Adding the new position from the client instead of setting it directly
-        // TODO: Refactor this code to make it look decent
-        float x = this.inputMouse.getX() + inputMouse.getX();
-        float y = this.inputMouse.getY() + inputMouse.getY();
-
-        this.inputMouse.setX(x);
-        this.inputMouse.setY(y);
-
-        // Update Snek
-        snek.update(x, y);
+        this.inputMouse = inputMouse;
     }
 
     public Snek getSnek() {
