@@ -1,6 +1,6 @@
 package com.s3.SnekIO.websocketserver.messagelogic;
 
-import com.s3.SnekIO.websocketserver.endpoints.TestEndpoint;
+import com.s3.SnekIO.websocketserver.endpoints.GameEndpoint;
 import com.s3.SnekIO.websocketserver.messagegenerator.GameMessageGenerator;
 import com.s3.SnekIO.websocketserver.util.MessageHelper;
 import org.slf4j.Logger;
@@ -10,13 +10,13 @@ public class GameMessageLogic implements IGameMessageLogic {
 
     private static final Logger logger = LoggerFactory.getLogger(GameMessageLogic.class);
 
-    TestEndpoint testEndpoint;
+    GameEndpoint gameEndpoint;
     GameMessageGenerator gameMessageGenerator;
 
     @Override
-    public void setEndPoint(TestEndpoint testEndpoint) {
-        this.testEndpoint = testEndpoint;
-        gameMessageGenerator = new GameMessageGenerator(testEndpoint);
+    public void setEndPoint(GameEndpoint gameEndpoint) {
+        this.gameEndpoint = gameEndpoint;
+        gameMessageGenerator = new GameMessageGenerator(gameEndpoint);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.s3.SnekIO.websocketserver;
 
+import com.s3.SnekIO.websocketserver.endpoints.GameEndpoint;
 import com.s3.SnekIO.websocketserver.game.Game;
-import com.s3.SnekIO.websocketserver.endpoints.TestEndpoint;
 import com.s3.SnekIO.websocketserver.messageHandlers.GameMessageHandler;
 import com.s3.SnekIO.websocketserver.messagegenerator.IMessageGenerator;
 import com.s3.SnekIO.websocketserver.messagegenerator.MessageGenerator;
@@ -41,10 +41,10 @@ public class WebsocketServer {
 
         IGameMessageLogic gameMessageLogic = new GameMessageLogic();
         final IGameMessageProcessor gameMessageProcessor = new GameMessageProcessor(gameMessageLogic);
-        final TestEndpoint testEndpoint = new TestEndpoint(gameMessageLogic, gameMessageProcessor);
-        gameMessageLogic.setEndPoint(testEndpoint);
+        final GameEndpoint gameEndpoint = new GameEndpoint(gameMessageLogic, gameMessageProcessor);
+        gameMessageLogic.setEndPoint(gameEndpoint);
 
-        IMessageGenerator messageGenerator = new MessageGenerator(testEndpoint);
+        IMessageGenerator messageGenerator = new MessageGenerator(gameEndpoint);
         Game game = new Game(messageGenerator, 500,500);
         messageGenerator.setGame(game);
 
@@ -54,9 +54,9 @@ public class WebsocketServer {
             ServerContainer serverContainer = WebSocketServerContainerInitializer.configureContext(wsContext);
             logger.info("javax.websocket layer initialized");
 
-            TestEndpoint.setMessageHandler(messageHandler);
+            GameEndpoint.setMessageHandler(messageHandler);
 
-            serverContainer.addEndpoint(TestEndpoint.class);
+            serverContainer.addEndpoint(GameEndpoint.class);
             logger.info("Endpoint added");
 
             wsServer.start();

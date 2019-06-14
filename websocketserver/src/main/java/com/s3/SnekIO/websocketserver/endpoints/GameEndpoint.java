@@ -1,7 +1,6 @@
 package com.s3.SnekIO.websocketserver.endpoints;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.s3.SnekIO.websocketserver.messageHandlers.IMessageHandler;
 import com.s3.SnekIO.websocketserver.messagelogic.IGameMessageLogic;
 import com.s3.SnekIO.websocketserver.messageprocessor.IGameMessageProcessor;
@@ -15,9 +14,9 @@ import java.io.IOException;
 import java.util.HashSet;
 
 @ServerEndpoint(value = "/test/")
-public class TestEndpoint implements IEndPoint {
+public class GameEndpoint implements IEndPoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestEndpoint.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameEndpoint.class);
     private static HashSet<Session> sessions = new HashSet<>();
 
     private static IMessageHandler messageHandler;
@@ -26,15 +25,15 @@ public class TestEndpoint implements IEndPoint {
     IGameMessageProcessor gameMessageProcessor;
     Gson gson = new Gson();
 
-    public TestEndpoint(IGameMessageLogic gameMessageLogic, IGameMessageProcessor gameMessageProcessor) {
+    public GameEndpoint(IGameMessageLogic gameMessageLogic, IGameMessageProcessor gameMessageProcessor) {
         this.gameMessageLogic = gameMessageLogic;
         this.gameMessageProcessor = gameMessageProcessor;
     }
 
-    public TestEndpoint() {}
+    public GameEndpoint() {}
 
     public static void setMessageHandler(IMessageHandler messageHandler) {
-        TestEndpoint.messageHandler = messageHandler;
+        GameEndpoint.messageHandler = messageHandler;
     }
 
     @OnOpen
@@ -70,7 +69,7 @@ public class TestEndpoint implements IEndPoint {
             try {
                 session.getBasicRemote().sendText(message);
             } catch (IOException e) {
-                logger.error("Error @ TestEndpoint.sendGlobalMessage: {0}", e);
+                logger.error("Error @ GameEndpoint.sendGlobalMessage: {0}", e);
             }
         }
     }

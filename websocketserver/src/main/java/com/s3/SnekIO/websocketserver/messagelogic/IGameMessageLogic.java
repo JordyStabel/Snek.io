@@ -1,8 +1,8 @@
 package com.s3.SnekIO.websocketserver.messagelogic;
 
-import com.s3.SnekIO.websocketserver.endpoints.TestEndpoint;
+import com.s3.SnekIO.websocketserver.endpoints.GameEndpoint;
 
 public interface IGameMessageLogic {
-    void setEndPoint(TestEndpoint testEndpoint);
+    void setEndPoint(GameEndpoint gameEndpoint);
     void sendGlobalMessage(String msg);
 }

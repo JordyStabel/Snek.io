@@ -41,7 +41,7 @@ public class Game implements Runnable {
 
         // Generate 100 orbs on game creation
         for (int i = 0; i < 200; i++) {
-            orbs.add(new Orb(new Position((random.nextInt(3) - 1) * random.nextFloat() * 2000, (random.nextInt(3) - 1) * random.nextFloat() * 2000), 4));
+            orbs.add(new Orb(new Position((random.nextInt(3) - 1) * random.nextFloat() * 2000, (random.nextInt(3) - 1) * random.nextFloat() * 2000), 10));
         }
     }
 
@@ -114,18 +114,18 @@ public class Game implements Runnable {
                         // Check each orb position if it's intersecting with the Snek head
                         // New java method (Java 8 "new"), which removes an item from a list if it matches a condition. Without needing to create a loop AND no ConcurrentModificationException!
                         // It also return a boolean, so it's easy to do something else after meeting the condition
-                        if (orbs.removeIf(orb -> Math.hypot(playerSnekHead.getX() - orb.getPosition().getX(), playerSnekHead.getY() - orb.getPosition().getY()) < 50)) {
+                        if (orbs.removeIf(orb -> Math.hypot(playerSnekHead.getX() - orb.getPosition().getX(), playerSnekHead.getY() - orb.getPosition().getY()) < player.getSnek().getR() + orb.getValue())) {
                             player.getSnek().increaseSize(1);
 
                             // Add a new orb back into the game (bigger so it's easier to see the newly added ones)
-                            orbs.add(new Orb(new Position((random.nextInt(3) - 1) * random.nextFloat() * 2000, (random.nextInt(3) - 1) * random.nextFloat() * 2000), 6));
+                            orbs.add(new Orb(new Position((random.nextInt(3) - 1) * random.nextFloat() * 2000, (random.nextInt(3) - 1) * random.nextFloat() * 2000), 20));
                         }
 
                         for (Player otherPlayer : players) {
                             if (otherPlayer != player) {
                                 for (Position otherPlayerSnekPart : otherPlayer.getSnek().getTail()) {
                                     // Replace '50' with actual r of players snek
-                                    if (Math.hypot(playerSnekHead.getX() - otherPlayerSnekPart.getX(), playerSnekHead.getY() - otherPlayerSnekPart.getY()) < 50) {
+                                    if (Math.hypot(playerSnekHead.getX() - otherPlayerSnekPart.getX(), playerSnekHead.getY() - otherPlayerSnekPart.getY()) < player.getSnek().getR() + otherPlayer.getSnek().getR()) {
                                         logger.info("Player: {} hit player: {}", player.getUuid(), otherPlayer.getUuid());
                                         //List<Position> toRemoveSnekParts = playerSnek.subList(0, playerSnek.size());
 
@@ -133,7 +133,7 @@ public class Game implements Runnable {
                                         for (Position position : playerSnek) {
                                             try {
                                                 orbs.add(new Orb(new Position(
-                                                        position.getX() + ((random.nextInt(3) - 1) * random.nextFloat() * 100), position.getY() + ((random.nextInt(3) - 1) * random.nextFloat() * 100)), 4));
+                                                        position.getX() + ((random.nextInt(3) - 1) * random.nextFloat() * 100), position.getY() + ((random.nextInt(3) - 1) * random.nextFloat() * 100)), 10));
                                             } catch (Exception e) {
                                                 logger.error("ConcurrentModificationException");
                                             }
