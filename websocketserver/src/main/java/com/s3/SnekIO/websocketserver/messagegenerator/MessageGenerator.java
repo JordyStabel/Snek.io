@@ -1,6 +1,5 @@
 package com.s3.SnekIO.websocketserver.messagegenerator;
 
-import com.s3.SnekIO.websocketserver.WebsocketServer;
 import com.s3.SnekIO.websocketserver.endpoints.IEndPoint;
 import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketshared.actions.Actions;
@@ -24,13 +23,17 @@ public class MessageGenerator implements IMessageGenerator {
     public void updatePlayers() {
         try {
             GameState gameState = new GameState(game.getOrbs(), game.getPlayers());
-            Message msg = new Message(Actions.GAMESTATE, gameState);
-            endPoint.broadcast(msg);
-            logger.info("Message broadcasted: {}", msg);
-        }
-        catch (Exception exception) {
+            Message message = new Message(Actions.GAMESTATE, gameState);
+            endPoint.broadcast(message);
+            logger.info("Message broadcasted: {}", message);
+        } catch (Exception exception) {
             logger.error("ConcurrentModificationException");
         }
+    }
+
+    @Override
+    public void sendToPlayer(String sessionId) {
+        endPoint.sendTo(new Message(Actions.YOUDIED), sessionId);
     }
 
     @Override

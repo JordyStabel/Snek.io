@@ -2,8 +2,6 @@ package com.s3.SnekIO.websocketserver.endpoints;
 
 import com.google.gson.Gson;
 import com.s3.SnekIO.websocketserver.messageHandlers.IMessageHandler;
-import com.s3.SnekIO.websocketserver.messagelogic.IGameMessageLogic;
-import com.s3.SnekIO.websocketserver.messageprocessor.IGameMessageProcessor;
 import com.s3.SnekIO.websocketshared.util.IJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +19,7 @@ public class GameEndpoint implements IEndPoint {
 
     private static IMessageHandler messageHandler;
 
-    IGameMessageLogic gameMessageLogic;
-    IGameMessageProcessor gameMessageProcessor;
     Gson gson = new Gson();
-
-    public GameEndpoint(IGameMessageLogic gameMessageLogic, IGameMessageProcessor gameMessageProcessor) {
-        this.gameMessageLogic = gameMessageLogic;
-        this.gameMessageProcessor = gameMessageProcessor;
-    }
 
     public GameEndpoint() {}
 
@@ -75,7 +66,7 @@ public class GameEndpoint implements IEndPoint {
     }
 
     private void broadcast(String message) {
-        for (javax.websocket.Session session : sessions) {
+        for (Session session : sessions) {
             session.getAsyncRemote().sendText(message);
         }
         logger.info("Broadcasted: {}", message);
@@ -83,7 +74,11 @@ public class GameEndpoint implements IEndPoint {
 
     @Override
     public void sendTo(IJson json, String sessionId) {
-
+        for (Session session : sessions) {
+            if (session.getId().equals(sessionId)) {
+                session.getAsyncRemote().sendText(json.toJson());
+            }
+        }
     }
 
     @Override

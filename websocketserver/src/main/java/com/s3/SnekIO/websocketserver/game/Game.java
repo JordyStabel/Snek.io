@@ -8,6 +8,7 @@ import com.s3.SnekIO.websocketshared.models.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -89,6 +90,28 @@ public class Game implements Runnable {
         }
     }
 
+    private boolean playerIntersect(Player player, Position playerSnekHead, List<Position> playerSnek, Player otherPlayer) {
+        for (Position otherPlayerSnekPart : otherPlayer.getSnek().getTail()) {
+            // Replace '50' with actual r of players snek
+            if (Math.hypot(playerSnekHead.getX() - otherPlayerSnekPart.getX(), playerSnekHead.getY() - otherPlayerSnekPart.getY()) < player.getSnek().getR() + otherPlayer.getSnek().getR()) {
+                logger.info("Player: {} hit player: {}", player.getUuid(), otherPlayer.getUuid());
+                //List<Position> toRemoveSnekParts = playerSnek.subList(0, playerSnek.size());
+
+                // Add the parts of the destroyed Snek, back as Orbs
+                for (Position position : playerSnek) {
+                    try {
+                        orbs.add(new Orb(new Position(
+                                position.getX() + ((random.nextInt(3) - 1) * random.nextFloat() * 100), position.getY() + ((random.nextInt(3) - 1) * random.nextFloat() * 100)), 10));
+                    } catch (Exception e) {
+                        logger.error("ConcurrentModificationException");
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void run() {
         double next_game_tick = System.currentTimeMillis();
@@ -123,33 +146,19 @@ public class Game implements Runnable {
 
                         for (Player otherPlayer : players) {
                             if (otherPlayer != player) {
-                                for (Position otherPlayerSnekPart : otherPlayer.getSnek().getTail()) {
-                                    // Replace '50' with actual r of players snek
-                                    if (Math.hypot(playerSnekHead.getX() - otherPlayerSnekPart.getX(), playerSnekHead.getY() - otherPlayerSnekPart.getY()) < player.getSnek().getR() + otherPlayer.getSnek().getR()) {
-                                        logger.info("Player: {} hit player: {}", player.getUuid(), otherPlayer.getUuid());
-                                        //List<Position> toRemoveSnekParts = playerSnek.subList(0, playerSnek.size());
-
-                                        // Add the parts of the destroyed Snek, back as Orbs
-                                        for (Position position : playerSnek) {
-                                            try {
-                                                orbs.add(new Orb(new Position(
-                                                        position.getX() + ((random.nextInt(3) - 1) * random.nextFloat() * 100), position.getY() + ((random.nextInt(3) - 1) * random.nextFloat() * 100)), 10));
-                                            } catch (Exception e) {
-                                                logger.error("ConcurrentModificationException");
-                                            }
-                                        }
-                                        hitPlayers.add(player);
-                                        //playerSnek.removeAll(toRemoveSnekParts);
-                                        playerSnek.clear();
-                                        player.getSnek().setSize(2);
-                                    }
+                                if (playerIntersect(player, playerSnekHead, playerSnek, otherPlayer)) {
+                                    hitPlayers.add(player);
+                                    //playerSnek.removeAll(toRemoveSnekParts);
+                                    playerSnek.clear();
+                                    player.getSnek().setSize(2);
                                 }
                             }
                         }
                     }
                 }
                 for (Player player : hitPlayers) {
-                    // Send to player that he/she died
+                    System.out.println(player.getName());
+                    messageGenerator.sendToPlayer(player.getSessionId());
                 }
                 hitPlayers.clear();
                 next_game_tick += SKIP_TICKS;

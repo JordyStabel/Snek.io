@@ -8,5 +8,6 @@ public enum Actions {
     DOWN,
     LEFT,
     RIGHT,
-    UPDATE
+    UPDATE,
+    YOUDIED
 }

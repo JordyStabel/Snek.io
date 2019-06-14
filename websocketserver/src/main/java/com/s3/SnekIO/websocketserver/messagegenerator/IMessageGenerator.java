@@ -6,5 +6,7 @@ public interface IMessageGenerator {
 
     void updatePlayers();
 
+    void sendToPlayer(String sessionId);
+
     void setGame(Game game);
 }

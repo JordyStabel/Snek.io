@@ -5,10 +5,6 @@ import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketserver.messageHandlers.GameMessageHandler;
 import com.s3.SnekIO.websocketserver.messagegenerator.IMessageGenerator;
 import com.s3.SnekIO.websocketserver.messagegenerator.MessageGenerator;
-import com.s3.SnekIO.websocketserver.messagelogic.GameMessageLogic;
-import com.s3.SnekIO.websocketserver.messagelogic.IGameMessageLogic;
-import com.s3.SnekIO.websocketserver.messageprocessor.GameMessageProcessor;
-import com.s3.SnekIO.websocketserver.messageprocessor.IGameMessageProcessor;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -39,10 +35,7 @@ public class WebsocketServer {
         wsServer.setHandler(wsContext);
         logger.info("Context handler set");
 
-        IGameMessageLogic gameMessageLogic = new GameMessageLogic();
-        final IGameMessageProcessor gameMessageProcessor = new GameMessageProcessor(gameMessageLogic);
-        final GameEndpoint gameEndpoint = new GameEndpoint(gameMessageLogic, gameMessageProcessor);
-        gameMessageLogic.setEndPoint(gameEndpoint);
+        final GameEndpoint gameEndpoint = new GameEndpoint();
 
         IMessageGenerator messageGenerator = new MessageGenerator(gameEndpoint);
         Game game = new Game(messageGenerator, 500,500);
