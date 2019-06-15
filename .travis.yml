@@ -20,6 +20,9 @@ matrix:
   include:
     - env: JDK='Oracle JDK 11'
     - install: . ./install-jdk.sh -F 11 -L BCL
+      branches:
+        - master
+        - development
 
 script:
   - mvn test -B
