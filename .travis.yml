@@ -9,9 +9,6 @@ addons:
     organization: "jordystabel-github" # the key of the org you chose at step #3
     token:
       secure: 79c57571d3181dd4e43a97afe897928d51550556 # encrypted value of your token
-      branches:
-        - master
-        - development
 
 jdk:
   - oraclejdk11
