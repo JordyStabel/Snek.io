@@ -4,9 +4,29 @@ sudo: false
 install: mvn install
 dist: trusty
 
+addons:
+  sonarcloud:
+    organization: "jordystabel-github" # the key of the org you chose at step #3
+    token:
+      secure: 79c57571d3181dd4e43a97afe897928d51550556 # encrypted value of your token
+      branches:
+        - master
+        - development
+
 jdk:
   - oraclejdk11
 
 before_install:
-  - mvn sonar:sonar -Dsonar.host.url=http://localhost:9000
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+
+matrix:
+  include:
+    - env: JDK='Oracle JDK 11'
+    - install: . ./install-jdk.sh -F 11 -L BCL
+
+script:
+  - mvn test -B
+  - echo PATH = ${PATH}
+  - echo JAVA_HOME = ${JAVA_HOME}
+  - java -version
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=snekio -Dsonar.organization=jordystabel-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=5b3d798a9d0dc52e366fccf46c5e93551aacf4e6
