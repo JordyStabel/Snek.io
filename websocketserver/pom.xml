@@ -11,6 +11,12 @@
 
     <artifactId>websocketserver</artifactId>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11.0.1</maven.compiler.source>
+        <maven.compiler.target>11.0.1</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>

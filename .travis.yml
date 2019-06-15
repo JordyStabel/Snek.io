@@ -8,4 +8,5 @@ jdk:
   - oraclejdk11
 
 before_install:
+  - mvn sonar:sonar -Dsonar.host.url=http://localhost:9000
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
