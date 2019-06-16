@@ -1,7 +1,5 @@
 package com.s3.SnekIO.websocketshared.models;
 
-import java.util.Random;
-
 public class Player {
     private String name;
     private String sessionId;
