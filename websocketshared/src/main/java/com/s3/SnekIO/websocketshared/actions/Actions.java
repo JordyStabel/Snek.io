@@ -4,10 +4,5 @@ public enum Actions {
     REGISTER,
     INPUTMOUSE,
     GAMESTATE,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    UPDATE,
     YOUDIED
 }

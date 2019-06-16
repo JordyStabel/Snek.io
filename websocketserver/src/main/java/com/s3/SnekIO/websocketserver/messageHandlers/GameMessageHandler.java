@@ -3,8 +3,8 @@ package com.s3.SnekIO.websocketserver.messageHandlers;
 import com.google.gson.Gson;
 import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketserver.game.PlayerLogic;
-import com.s3.SnekIO.websocketshared.models.InputMouse;
 import com.s3.SnekIO.websocketshared.models.Player;
+import com.s3.SnekIO.websocketshared.models.Position;
 import com.s3.SnekIO.websocketshared.models.Register;
 import com.s3.SnekIO.websocketshared.message.Message;
 import org.slf4j.Logger;
@@ -32,14 +32,14 @@ public class GameMessageHandler implements IMessageHandler {
                 registerPlayer(register, sessionId);
                 break;
             case INPUTMOUSE:
-                InputMouse inputMouse = (InputMouse) message.parseData(InputMouse.class);
+                Position position = (Position) message.parseData(Position.class);
                 Player player = game.findPlayer(sessionId);
 
                 if (player == null) {
                     logger.error("PlayerLogic can't be null");
                     return;
                 }
-                playerLogic.updatePlayerInputMouse(player, inputMouse);
+                playerLogic.updatePlayerPosition(player, position);
                 break;
             default:
                 logger.error("No valid action");

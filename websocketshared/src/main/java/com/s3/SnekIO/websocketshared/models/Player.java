@@ -8,14 +8,14 @@ public class Player {
     private String uuid;
     private String color;
     private Snek snek;
-    private InputMouse inputMouse;
+    private Position position;
 
     public Player(String name, String sessionId, String uuid, String color, Position startingPosition) {
         this.name = name;
         this.sessionId = sessionId;
         this.uuid = uuid;
         this.color = color;
-        this.inputMouse = new InputMouse(0, 0);
+        this.position = new Position(0, 0);
         this.snek = new Snek(startingPosition.getX(), startingPosition.getY(), 25, 5, uuid);
     }
 
@@ -31,12 +31,12 @@ public class Player {
         return uuid;
     }
 
-    public InputMouse getInputMouse() {
-        return inputMouse;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setInputMouse(InputMouse inputMouse) {
-        this.inputMouse = inputMouse;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Snek getSnek() {
@@ -55,7 +55,7 @@ public class Player {
                 ", uuid='" + uuid + '\'' +
                 ", color='" + color + '\'' +
                 ", snek=" + snek +
-                ", inputMouse=" + inputMouse +
+                ", position=" + position +
                 '}';
     }
 }

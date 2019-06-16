@@ -1,20 +1,20 @@
 package com.s3.SnekIO.websocketserver.game;
 
-import com.s3.SnekIO.websocketshared.models.InputMouse;
 import com.s3.SnekIO.websocketshared.models.Player;
+import com.s3.SnekIO.websocketshared.models.Position;
 
 public class PlayerLogic {
 
     private SnekLogic snekLogic = new SnekLogic();
 
-    public void updatePlayerInputMouse(Player player, InputMouse inputMouse) {
-        InputMouse old = player.getInputMouse();
+    public void updatePlayerPosition(Player player, Position position) {
+        Position old = player.getPosition();
 
         // Adding the new position from the client instead of setting it directly
-        float x = old.getX() + inputMouse.getX();
-        float y = old.getY() + inputMouse.getY();
+        float x = old.getX() + position.getX();
+        float y = old.getY() + position.getY();
 
-        player.setInputMouse(new InputMouse(x, y));
+        player.setPosition(new Position(x, y));
 
         // Update Snek
         snekLogic.updateSnek(player.getSnek(), x, y);

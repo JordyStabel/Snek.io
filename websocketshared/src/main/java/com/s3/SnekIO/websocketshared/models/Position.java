@@ -1,6 +1,8 @@
 package com.s3.SnekIO.websocketshared.models;
 
-public class Position {
+import com.s3.SnekIO.websocketshared.actions.IAction;
+
+public class Position implements IAction {
     private float x;
     private float y;
 

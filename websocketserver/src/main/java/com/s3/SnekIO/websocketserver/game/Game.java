@@ -152,9 +152,6 @@ public class Game implements Runnable {
                 // Last item in the playerSnek is the head
                 Position playerSnekHead = playerSnek.get(playerSnek.size() - 1);
 
-                // Check for collecting Orbs
-                orbIntersect(playerSnekHead, player);
-
                 // Check other player collision
                 for (Player otherPlayer : players) {
                     if (otherPlayer != player && playerIntersect(player, playerSnekHead, playerSnek, otherPlayer)) {
@@ -165,6 +162,9 @@ public class Game implements Runnable {
                         player.getSnek().setSize(2);
                     }
                 }
+
+                // Check for collecting Orbs
+                orbIntersect(playerSnekHead, player);
             }
         }
         handleHitPlayer(hitPlayers);
