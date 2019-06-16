@@ -5,7 +5,7 @@ import com.s3.SnekIO.websocketserver.game.Game;
 import com.s3.SnekIO.websocketserver.game.PlayerLogic;
 import com.s3.SnekIO.websocketshared.models.InputMouse;
 import com.s3.SnekIO.websocketshared.models.Player;
-import com.s3.SnekIO.websocketshared.actions.Register;
+import com.s3.SnekIO.websocketshared.models.Register;
 import com.s3.SnekIO.websocketshared.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

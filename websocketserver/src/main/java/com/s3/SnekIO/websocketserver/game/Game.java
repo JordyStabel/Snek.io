@@ -80,6 +80,8 @@ public class Game implements Runnable {
     public void removePlayer(String sessionId) {
         Player player = findPlayer(sessionId);
         if (player != null && player.equals(findPlayer(player.getSessionId()))) {
+            // Add the Orbs back into the game
+            explodeSnek(player.getSnek().getTail());
             players.remove(player);
         }
     }
