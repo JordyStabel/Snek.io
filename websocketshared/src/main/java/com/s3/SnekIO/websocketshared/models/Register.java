@@ -1,7 +1,6 @@
 package com.s3.SnekIO.websocketshared.models;
 
 import com.s3.SnekIO.websocketshared.actions.IAction;
-import com.s3.SnekIO.websocketshared.models.Position;
 
 public class Register implements IAction {
     private String name;
