@@ -1,6 +1,7 @@
 package com.s3.SnekIO.websocketserver.game;
 
 import com.s3.SnekIO.websocketserver.messagegenerator.IMessageGenerator;
+import com.s3.SnekIO.websocketserver.util.IObserver;
 import com.s3.SnekIO.websocketshared.models.Orb;
 import com.s3.SnekIO.websocketshared.models.Player;
 import com.s3.SnekIO.websocketshared.models.Position;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Game implements Runnable {
+public class Game implements Runnable, IObserver {
 
     private static final Logger logger = LoggerFactory.getLogger(Game.class);
 
@@ -44,9 +45,8 @@ public class Game implements Runnable {
         }
     }
 
-    public void start() {
+    private void start() {
         running = true;
-
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -180,6 +180,17 @@ public class Game implements Runnable {
                 gameUpdateTick();
                 nextGameTick += SKIP_TICKS;
             }
+        }
+    }
+
+    @Override
+    public void update(Object object) {
+        if (!players.isEmpty() || !running) {
+            start();
+        } else {
+            // Stop the thread
+            running = false;
+            logger.info("Game stopped");
         }
     }
 }

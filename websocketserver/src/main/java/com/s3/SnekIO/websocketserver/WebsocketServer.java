@@ -42,6 +42,7 @@ public class WebsocketServer {
         messageGenerator.setGame(game);
 
         GameMessageHandler messageHandler = new GameMessageHandler(game);
+        messageHandler.subscribe(game);
 
         try {
             ServerContainer serverContainer = WebSocketServerContainerInitializer.configureContext(wsContext);
@@ -54,9 +55,6 @@ public class WebsocketServer {
 
             wsServer.start();
             logger.info("Server started");
-
-            game.start();
-            logger.info("GameState started");
 
             wsServer.join();
             logger.info("Server joined");
