@@ -1,5 +1,5 @@
-import com.s3.SnekIO.restserver.User;
-import com.s3.SnekIO.restserver.exception.ConflictException;
+import com.s3.snekio.restserver.models.User;
+import com.s3.snekio.restserver.exception.ConflictException;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

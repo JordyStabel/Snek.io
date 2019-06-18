@@ -1,12 +1,11 @@
-import com.s3.SnekIO.restserver.User;
-import com.s3.SnekIO.restserver.exception.ConflictException;
-import com.s3.SnekIO.restserver.repositories.UserRepository;
+import com.s3.snekio.restserver.models.User;
+import com.s3.snekio.restserver.exception.ConflictException;
+import com.s3.snekio.restserver.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
