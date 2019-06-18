@@ -1,6 +1,8 @@
 package com.s3.snekio.websocketshared.models;
 
-public class Orb {
+import com.s3.snekio.websocketshared.actions.IAction;
+
+public class Orb implements IAction {
     private Position position;
     private float value;
 

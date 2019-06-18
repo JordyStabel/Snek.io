@@ -33,6 +33,7 @@ public class GameMessageHandler implements IMessageHandler, IObservable {
     @Override
     public void handelMessage(String json, String sessionId) {
         Message message = gson.fromJson(json, Message.class);
+        Player player;
 
         switch (message.getAction()) {
             case REGISTER:
@@ -41,7 +42,7 @@ public class GameMessageHandler implements IMessageHandler, IObservable {
                 break;
             case INPUTMOUSE:
                 Position position = (Position) message.parseData(Position.class);
-                Player player = game.findPlayer(sessionId);
+                player = game.findPlayer(sessionId);
 
                 if (player == null) {
                     logger.error("PlayerLogic can't be null");

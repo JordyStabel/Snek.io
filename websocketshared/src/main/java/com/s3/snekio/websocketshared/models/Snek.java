@@ -1,8 +1,10 @@
 package com.s3.snekio.websocketshared.models;
 
+import com.s3.snekio.websocketshared.actions.IAction;
+
 import java.util.ArrayList;
 
-public class Snek {
+public class Snek implements IAction {
     private Position position;
     private float r;
     private int size;

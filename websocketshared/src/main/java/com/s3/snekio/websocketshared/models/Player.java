@@ -1,6 +1,8 @@
 package com.s3.snekio.websocketshared.models;
 
-public class Player {
+import com.s3.snekio.websocketshared.actions.IAction;
+
+public class Player implements IAction {
     private String name;
     private String sessionId;
     private String uuid;
