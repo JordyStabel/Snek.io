@@ -8,9 +8,9 @@ public class User {
     @Id
     public ObjectId _id;
 
-    private String userName;
-    private String email;
-    private String password;
+    public String userName;
+    public String email;
+    public String password;
 
     public User() {
     }
